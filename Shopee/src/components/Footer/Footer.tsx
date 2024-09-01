@@ -14,7 +14,7 @@ export default function Footer() {
             <p>Chính sách vận chuyển</p>
             <p>CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN</p>
           </div>
-          <div className="col-span-3 text-center text-xs">
+          <div className="col-span-3 text-center text-xs space-y-1">
             <p>
               Địa chỉ: Tầng 4-5-6, Tòa nhà Capital Place, số 29 đường Liễu Giai, Phường Ngọc Khánh, Quận Ba Đình, Thành
               phố Hà Nội, Việt Nam. Tổng đài hỗ trợ: 19001221 - Email: cskh@hotro.shopee.vn
