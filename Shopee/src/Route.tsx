@@ -20,7 +20,11 @@ export default function Route() {
     },
     {
       path: '/login',
-      element: <Login />,
+      element: (
+        <RegisterLayout>
+          <Login />
+        </RegisterLayout>
+      ),
     },
   ])
 
