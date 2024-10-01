@@ -1,32 +1,71 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Label } from '@radix-ui/react-label'
+import { Label } from '@/components/ui/label'
+import { rules } from '@/utils/rules'
+import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+
+interface IFormData {
+  email: string
+  password: string
+  confirm_password: string
+}
 
 export default function Login() {
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<IFormData>()
+
+  const onSubmit = handleSubmit((data) => {
+    console.log(data)
+  })
   return (
     <div className="bg-orange">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="max-w-7xl mx-auto p-4 h-full grid grid-cols-1 lg:grid-cols-3 items-center">
-          <Card className="lg:col-start-3">
+      <div className="max-w-7xl mx-auto p-4 h-full grid grid-cols-1 lg:grid-cols-3 items-center">
+        <form className="lg:col-start-3" onSubmit={onSubmit} noValidate>
+          <Card>
             <CardHeader>
               <CardTitle className="text-2xl">Đăng nhập</CardTitle>
             </CardHeader>
             <CardContent className="grid gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="m@example.com" required />
+                <Input type="email" {...register('email', rules.email)} />
+                <div className="text-sm text-red-500">{errors.email?.message}</div>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" required />
+                <Input type="password" autoComplete="on" {...register('password', rules.password)} />
+                <div className="text-sm text-red-500">{errors.password?.message}</div>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="confirm_password">Confirm password</Label>
+                <Input
+                  type="password"
+                  autoComplete="on"
+                  {...register('confirm_password', {
+                    required: { value: true, message: 'Confirm password là bắt buộc' },
+                    validate: (value) => value === getValues('password') || 'Password không khớp',
+                  })}
+                />
+                <div className="text-sm text-red-500">{errors.confirm_password?.message}</div>
+              </div>
+              <div className="flex items-center justify-center text-sm">
+                <span className="text-gray-300">Bạn đã có tài khoản?</span>
+                <Link to="/login" className="text-orange">
+                  Đăng nhập
+                </Link>
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Login</Button>
+              <Button className="w-full">Đăng ký</Button>
             </CardFooter>
           </Card>
-        </div>
+        </form>
       </div>
     </div>
   )

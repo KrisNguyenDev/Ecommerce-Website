@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <div className="py-12 bg-neutral-100">
+    <div className="py-12 bg-neutral-100 dark:bg-black ">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-3 text-sm text-gray-500 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 text-sm text-gray-500 dark:text-white gap-10">
           <p className="col-span-3 lg:col-span-1">© 2024 Shopee. Tất cả các quyền được bảo lưu.</p>
           <p className="col-span-3 lg:col-span-2">
             Quốc gia & Khu vực: Singapore | Indonesia | Thái Lan | Malaysia | Việt Nam | Philippines | Brazil | México |

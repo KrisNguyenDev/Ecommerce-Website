@@ -7,7 +7,15 @@ import RegisterLayout from './layouts/Registerlayout'
 export default function Route() {
   const routeElements = useRoutes([
     {
-      path: '/',
+      path: '/login',
+      element: (
+        <RegisterLayout>
+          <Login />
+        </RegisterLayout>
+      ),
+    },
+    {
+      path: '/products',
       element: <ProductList />,
     },
     {
@@ -15,14 +23,6 @@ export default function Route() {
       element: (
         <RegisterLayout>
           <Register />
-        </RegisterLayout>
-      ),
-    },
-    {
-      path: '/login',
-      element: (
-        <RegisterLayout>
-          <Login />
         </RegisterLayout>
       ),
     },

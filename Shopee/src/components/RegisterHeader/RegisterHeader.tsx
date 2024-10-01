@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ModeToggle } from '../ui/mode-toggle'
 
 export default function registerHeader() {
   return (
@@ -14,7 +15,10 @@ export default function registerHeader() {
           </Link>
           <div className="ml-5 text-xl lg:text-2xl">Đăng ký</div>
         </div>
-        <div className="text-orange self-center">Bạn cần giúp đỡ?</div>
+        <div className="flex gap-4">
+          <div className="text-orange self-center">Bạn cần giúp đỡ?</div>
+          <ModeToggle />
+        </div>
       </div>
     </div>
   )

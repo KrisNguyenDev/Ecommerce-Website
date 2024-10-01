@@ -7,7 +7,7 @@ import { rules } from '@/utils/rules'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-interface formData {
+interface IFormData {
   email: string
   password: string
   confirm_password: string
@@ -17,15 +17,23 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    watch,
+    getValues,
     formState: { errors },
-  } = useForm<formData>()
+  } = useForm<IFormData>()
 
-  const onSubmit = handleSubmit((data) => {
-    // eslint-disable-next-line no-debugger
-    debugger
-    console.log(data)
-  })
-  console.log(errors)
+  const onSubmit = handleSubmit(
+    (data) => {
+      console.log(data)
+    },
+    (data) => {
+      const password = getValues('password')
+      console.log(password)
+    },
+  )
+
+  const formValues = watch()
+  console.log(formValues)
   return (
     <div
       className="bg-orange"
@@ -46,25 +54,28 @@ export default function Register() {
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input type="email" {...register('email', rules.email)} />
-                <div className="text-sm text-red-500 min-h-[20px]">{errors.email?.message}</div>
+                <div className="text-sm text-red-500">{errors.email?.message}</div>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   type="password"
+                  autoComplete="on"
                   {...register('password', { required: { value: true, message: 'Password là bắt buộc' } })}
                 />
-                <div className="text-sm text-red-500 min-h-[20px]">{errors.password?.message}</div>
+                <div className="text-sm text-red-500">{errors.password?.message}</div>
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="confirm_password">Confirm password</Label>
                 <Input
                   type="password"
+                  autoComplete="on"
                   {...register('confirm_password', {
                     required: { value: true, message: 'Confirm password là bắt buộc' },
+                    validate: (value) => value === getValues('password') || 'Password không khớp',
                   })}
                 />
-                <div className="text-sm text-red-500 min-h-[20px]">{errors.confirm_password?.message}</div>
+                <div className="text-sm text-red-500">{errors.confirm_password?.message}</div>
               </div>
               <div className="flex items-center justify-center text-sm">
                 <span className="text-gray-300">Bạn đã có tài khoản?</span>
