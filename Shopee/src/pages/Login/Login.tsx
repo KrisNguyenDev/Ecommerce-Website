@@ -4,16 +4,16 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginBody, LoginDTO } from '@/types/login.type'
+import { LoginBody, LoginType } from '@/types/login.type'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link } from 'react-router-dom'
 
 export default function Login() {
-  const form = useForm<LoginDTO>({
+  const form = useForm<LoginType>({
     resolver: zodResolver(LoginBody),
   })
 
-  const onSubmit = (values: LoginDTO) => {
+  const onSubmit = (values: LoginType) => {
     console.log(values)
   }
 

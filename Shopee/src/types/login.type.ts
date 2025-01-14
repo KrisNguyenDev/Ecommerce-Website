@@ -42,4 +42,4 @@ export const LoginBody = z
     }
   })
 
-export type LoginDTO = z.TypeOf<typeof LoginBody>
+export type LoginType = z.TypeOf<typeof LoginBody>
