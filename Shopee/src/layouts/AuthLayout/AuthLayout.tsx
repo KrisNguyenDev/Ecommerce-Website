@@ -1,14 +1,14 @@
 import Footer from '@/components/Footer'
-import RegisterHeader from '@/components/RegisterHeader'
+import AuthHeader from '@/components/AuthHeader'
 
 interface Props {
   children?: React.ReactNode
 }
 
-export default function RegisterLayout({ children }: Props) {
+export default function AuthLayout({ children }: Props) {
   return (
     <div>
-      <RegisterHeader />
+      <AuthHeader />
       {children}
       <Footer />
     </div>

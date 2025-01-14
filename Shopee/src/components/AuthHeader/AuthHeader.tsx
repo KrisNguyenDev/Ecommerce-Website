@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ModeToggle } from '../ui/mode-toggle'
 
-export default function registerHeader() {
+export default function AuthHeader() {
   return (
     <div className="max-w-7xl mx-auto px-4">
       <div className="flex justify-between py-5">
