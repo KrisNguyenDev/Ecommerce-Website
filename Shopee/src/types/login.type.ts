@@ -10,10 +10,14 @@ export const LoginBody = z
       .trim()
       .min(2, 'Tên phải có ít nhất 2 ký tự')
       .max(256, 'Tên không được vượt quá 256 ký tự'),
+    class: z.number({
+      required_error: 'Tên không được để trống',
+      invalid_type_error: 'Tên phải là chuỗi',
+    }),
     email: z
       .string({
-        required_error: 'Email không được để trống',
-        invalid_type_error: 'Email phải là chuỗi',
+        required_error: 'Class không được để trống',
+        invalid_type_error: 'Class phải là chuỗi',
       })
       .email('Email không đúng định dạng'),
     password: z
