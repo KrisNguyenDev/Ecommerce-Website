@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const LoginBody = z
+export const RegisterBody = z
   .object({
     email: z
       .string({
@@ -15,7 +15,18 @@ export const LoginBody = z
       })
       .min(6, 'Mật khẩu phải có ít nhất 6 ký tự')
       .max(100, 'Mật khẩu không được vượt quá 100 ký tự'),
+    confirmPassword: z
+      .string({
+        required_error: 'Xác nhận mật khẩu không được để trống',
+        invalid_type_error: 'Xác nhận mật khẩu phải là chuỗi',
+      })
+      .min(6, 'Xác nhận mật khẩu phải có ít nhất 6 ký tự')
+      .max(100, 'Xác nhận mật khẩu không được vượt quá 100 ký tự'),
   })
   .strict('Dữ liệu không hợp lệ')
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Mật khẩu không khớp',
+    path: ['confirmPassword'],
+  })
 
-export type LoginType = z.TypeOf<typeof LoginBody>
+export type RegisterType = z.TypeOf<typeof RegisterBody>

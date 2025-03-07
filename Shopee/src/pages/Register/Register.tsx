@@ -4,25 +4,30 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginBody, LoginType } from '@/types/login.type'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link } from 'react-router-dom'
+import { RegisterBody, RegisterType } from '@/types/register.type'
 
 export default function Register() {
-  const form = useForm<LoginType>({
-    resolver: zodResolver(LoginBody),
+  const form = useForm<RegisterType>({
+    resolver: zodResolver(RegisterBody),
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   })
 
-  const onSubmit = (values: LoginType) => {
-    console.log(values)
+  const onSubmit = (values: RegisterType) => {
+    console.log('values:', values)
   }
 
   return (
     <div className="bg-orange">
-      <div className="max-w-7xl mx-auto p-4 h-full grid grid-cols-1 lg:grid-cols-3 items-center">
+      <div className="container py-4 h-full grid grid-cols-1 lg:grid-cols-3 items-center">
         <Card className="lg:col-start-3">
           <CardHeader>
-            <CardTitle className="text-2xl">Đăng nhập</CardTitle>
+            <CardTitle className="text-2xl">Đăng ký</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4">
             <Form {...form}>
@@ -34,7 +39,7 @@ export default function Register() {
                     <FormItem>
                       <Label>Email</Label>
                       <FormControl>
-                        <Input placeholder="email" {...field} />
+                        <Input placeholder="email" autoComplete="username" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -47,14 +52,27 @@ export default function Register() {
                     <FormItem>
                       <Label>Mật khẩu</Label>
                       <FormControl>
-                        <Input placeholder="password" {...field} />
+                        <Input type="password" autoComplete="new-password" placeholder="password" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Label>Xác nhận mật khẩu</Label>
+                      <FormControl>
+                        <Input type="password" autoComplete="new-password" placeholder="confirm password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 <Button className="w-full" type="submit">
-                  Đăng nhập
+                  Đăng ký
                 </Button>
               </form>
             </Form>

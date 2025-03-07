@@ -11,6 +11,10 @@ import { Link } from 'react-router-dom'
 export default function Login() {
   const form = useForm<LoginType>({
     resolver: zodResolver(LoginBody),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   })
 
   const onSubmit = (values: LoginType) => {
@@ -19,7 +23,7 @@ export default function Login() {
 
   return (
     <div className="bg-orange">
-      <div className="max-w-7xl mx-auto p-4 h-full grid grid-cols-1 lg:grid-cols-3 items-center">
+      <div className="container h-full grid grid-cols-1 lg:grid-cols-3 items-center">
         <Card className="lg:col-start-3">
           <CardHeader>
             <CardTitle className="text-2xl">Đăng nhập</CardTitle>
@@ -34,7 +38,7 @@ export default function Login() {
                     <FormItem>
                       <Label>Email</Label>
                       <FormControl>
-                        <Input placeholder="email" {...field} />
+                        <Input autoComplete="username" placeholder="email" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -47,7 +51,7 @@ export default function Login() {
                     <FormItem>
                       <Label>Mật khẩu</Label>
                       <FormControl>
-                        <Input placeholder="password" {...field} />
+                        <Input type="password" autoComplete="new-password" placeholder="password" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
