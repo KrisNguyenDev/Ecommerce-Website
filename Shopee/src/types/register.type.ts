@@ -24,9 +24,14 @@ export const RegisterBody = z
       .max(100, 'Xác nhận mật khẩu không được vượt quá 100 ký tự'),
   })
   .strict('Dữ liệu không hợp lệ')
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Mật khẩu không khớp',
-    path: ['confirmPassword'],
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Mật khẩu không khớp',
+        path: ['confirmPassword'],
+      })
+    }
   })
 
 export type RegisterType = z.TypeOf<typeof RegisterBody>
