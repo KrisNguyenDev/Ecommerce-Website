@@ -78,12 +78,9 @@ export default function Register() {
             </Form>
           </CardContent>
           <CardFooter className="justify-center">
-            <div>
-              Bạn mới biết đến Shopee?{' '}
-              <Link className="text-orange" to="/register">
-                Đăng ký
-              </Link>
-            </div>
+            <Link to="/login" className="underline text-blue-500 text-sm">
+              Đăng nhập
+            </Link>
           </CardFooter>
         </Card>
       </div>

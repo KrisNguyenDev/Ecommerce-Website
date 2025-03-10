@@ -15,16 +15,16 @@ export default function Route() {
       ),
     },
     {
-      path: '/products',
-      element: <ProductList />,
-    },
-    {
       path: '/register',
       element: (
         <AuthLayout>
           <Register />
         </AuthLayout>
       ),
+    },
+    {
+      path: '/products',
+      element: <ProductList />,
     },
   ])
 
