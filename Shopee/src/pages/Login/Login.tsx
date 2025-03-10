@@ -4,9 +4,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginBody, LoginType } from '@/types/login.type'
+import { LoginBody, LoginResponse, LoginType } from '@/types/login.type'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link } from 'react-router-dom'
+import { loginAccount } from '@/apis/auth.api'
+import { useMutation } from '@tanstack/react-query'
+import { isAxiosUnprocessableEntityError } from '@/utils/utils'
 
 export default function Login() {
   const form = useForm<LoginType>({
@@ -17,8 +20,22 @@ export default function Login() {
     },
   })
 
+  const loginMutation = useMutation({
+    mutationFn: loginAccount,
+  })
+
   const onSubmit = (values: LoginType) => {
-    console.log(values)
+    loginMutation.mutate(values, {
+      onError: (error) => {
+        if (isAxiosUnprocessableEntityError<LoginResponse>(error)) {
+          const formError = error.response?.data.data
+          formError &&
+            Object.entries(formError).forEach(([key, value]) => {
+              form.setError(key as keyof LoginType, { type: 'Server', message: value })
+            })
+        }
+      },
+    })
   }
 
   return (
