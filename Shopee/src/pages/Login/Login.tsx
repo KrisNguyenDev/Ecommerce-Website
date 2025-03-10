@@ -26,6 +26,9 @@ export default function Login() {
 
   const onSubmit = (values: LoginType) => {
     loginMutation.mutate(values, {
+      onSuccess(data) {
+        console.log('data', data.data.data)
+      },
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<LoginResponse>(error)) {
           const formError = error.response?.data.data

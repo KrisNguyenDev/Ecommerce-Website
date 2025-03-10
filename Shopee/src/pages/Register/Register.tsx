@@ -28,7 +28,7 @@ export default function Register() {
   const onSubmit = (values: RegisterType) => {
     registerMutation.mutate(values, {
       onSuccess: (data) => {
-        console.log('data:', data)
+        console.log('data:', data.data.data)
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<RegisterResponse>(error)) {

@@ -3,6 +3,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import ProductList from './pages/ProductList'
 import AuthLayout from './layouts/AuthLayout/AuthLayout'
+import MainLayout from './layouts/MainLayouts'
 
 export default function Route() {
   const routeElements = useRoutes([
@@ -24,7 +25,11 @@ export default function Route() {
     },
     {
       path: '/products',
-      element: <ProductList />,
+      element: (
+        <MainLayout>
+          <ProductList />
+        </MainLayout>
+      ),
     },
   ])
 
