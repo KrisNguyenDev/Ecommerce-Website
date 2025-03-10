@@ -1,4 +1,5 @@
 import z from 'zod'
+import { ResponseApi } from './utils.type'
 
 export const LoginBody = z
   .object({
@@ -19,3 +20,5 @@ export const LoginBody = z
   .strict('Dữ liệu không hợp lệ')
 
 export type LoginType = z.TypeOf<typeof LoginBody>
+
+export type LoginResponse = ResponseApi<LoginType>
