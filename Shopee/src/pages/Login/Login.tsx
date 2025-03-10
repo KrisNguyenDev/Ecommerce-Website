@@ -24,7 +24,7 @@ export default function Login() {
   return (
     <div className="bg-orange">
       <div className="container py-4 h-full grid grid-cols-1 lg:grid-cols-3 items-center">
-        <Card className="lg:col-start-3">
+        <Card className="md:col-start-3">
           <CardHeader>
             <CardTitle className="text-2xl">Đăng nhập</CardTitle>
           </CardHeader>

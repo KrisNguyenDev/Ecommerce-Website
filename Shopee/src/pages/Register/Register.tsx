@@ -7,6 +7,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link } from 'react-router-dom'
 import { RegisterBody, RegisterType } from '@/types/register.type'
+import { registerAccount } from '@/apis/auth.api'
+import { useMutation } from '@tanstack/react-query'
 
 export default function Register() {
   const form = useForm<RegisterType>({
@@ -18,8 +20,18 @@ export default function Register() {
     },
   })
 
+  const registerMutation = useMutation({
+    mutationFn: registerAccount,
+    onSuccess: (data) => {
+      console.log('data:', data)
+    },
+    onError: (error) => {
+      console.log('error:', error)
+    },
+  })
+
   const onSubmit = (values: RegisterType) => {
-    console.log('values:', values)
+    registerMutation.mutate(values)
   }
 
   return (
