@@ -4,10 +4,33 @@ import { LanguageLabel, LanguageType } from '../../enum/language'
 import { Link } from 'react-router-dom'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { formatCurrency, truncateText } from '@/utils/utils'
 
 export default function Header() {
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageType>(LanguageType.VI)
   const [searchText, setSearchText] = useState<string>('')
+
+  const carts = [
+    {
+      picture:
+        'https://images.unsplash.com/photo-1741439432848-ae1301dca116?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8',
+      name: 'Hoa la kènnnnnnnnnnnnnnnnnnnnnnnnnn',
+      price: '280000',
+    },
+    {
+      picture:
+        'https://images.unsplash.com/photo-1741017638661-dab7a153f925?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Ô tô',
+      price: '90000000',
+    },
+    {
+      picture:
+        'https://images.unsplash.com/photo-1741332965913-07f1d6c27cb9?q=80&w=1587&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      name: 'Xe máy',
+      price: '686868',
+    },
+  ]
 
   return (
     <div className="pt-2 pb-5 bg-orange text-white">
@@ -94,21 +117,44 @@ export default function Header() {
             </svg>
           </Button>
         </div>
-        <Link to="/">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-            />
-          </svg>
+        <Link to="/cart">
+          <Popover>
+            <PopoverTrigger asChild>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                />
+              </svg>
+            </PopoverTrigger>
+            <PopoverContent className="w-80">
+              <div>
+                <div className="text-gray-500 mb-2">Sản phẩm mới thêm</div>
+                {carts?.map((item) => (
+                  <div className="flex my-4" key={item.name}>
+                    <img alt="picture" src={item.picture} className="w-12 h-12" />
+                    <div className="w-full flex justify-between pl-2">
+                      <div className="text-nowrap">{truncateText(item.name)}</div>
+                      <div className="text-orange">{formatCurrency(item.price)}</div>
+                    </div>
+                  </div>
+                ))}
+                <div className="w-full flex justify-end">
+                  <Link to="/cart">
+                    <Button className="text-xs">Xem giỏ hàng</Button>
+                  </Link>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </Link>
       </div>
     </div>
