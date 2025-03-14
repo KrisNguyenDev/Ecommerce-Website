@@ -5,15 +5,16 @@ import ProductList from './pages/ProductList'
 import AuthLayout from './layouts/AuthLayout/AuthLayout'
 import MainLayout from './layouts/MainLayouts'
 import Profile from './pages/Profile'
-
-const isAuthenticated = true
+import useAppStore from './store/useAppStore'
 
 function ProtectedRoute() {
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
+  const { accessToken } = useAppStore()
+  return accessToken ? <Outlet /> : <Navigate to="/login" />
 }
 
 function RejectedRoute() {
-  return isAuthenticated ? <Navigate to="/" /> : <Outlet />
+  const { accessToken } = useAppStore()
+  return accessToken ? <Navigate to="/" /> : <Outlet />
 }
 
 export default function Route() {

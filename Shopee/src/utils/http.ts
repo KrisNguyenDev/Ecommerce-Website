@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 
 class Http {
   instance: AxiosInstance
+  private accessToken: string
   constructor() {
     this.instance = axios.create({
       baseURL: 'https://api-ecom.duthanhduoc.com/',
@@ -14,7 +15,12 @@ class Http {
 
     // Add a response interceptor
     this.instance.interceptors.response.use(
-      function (response) {
+      (response) => {
+        const { url } = response.config
+        if (url == '/login' || url == '/register') {
+          this.accessToken = 'abc'
+          console.log(response)
+        }
         return response
       },
       function (error: AxiosError) {
