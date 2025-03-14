@@ -6,13 +6,13 @@ import AuthLayout from './layouts/AuthLayout/AuthLayout'
 import MainLayout from './layouts/MainLayouts'
 import Profile from './pages/Profile'
 
+const isAuthenticated = true
+
 function ProtectedRoute() {
-  const isAuthenticated = true
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
 
 function RejectedRoute() {
-  const isAuthenticated = true
   return isAuthenticated ? <Navigate to="/" /> : <Outlet />
 }
 
@@ -56,6 +56,7 @@ export default function Route() {
     },
     {
       path: '/',
+      index: true,
       element: (
         <MainLayout>
           <ProductList />
