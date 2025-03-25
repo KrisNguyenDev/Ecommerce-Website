@@ -27,12 +27,12 @@ class Http {
         if (url === '/login' || url === '/register') {
           this.accessToken = (response.data as AuthResponse).data?.access_token
           this.accessToken && setAccessTokenToLS(this.accessToken)
-          console.log(this.accessToken)
         }
         if (url === '/logout') {
-          this.accessToken = undefined
+          this.accessToken = ''
           clearAccessTokenFromLS()
         }
+
         return response
       },
       function (error: AxiosError) {
