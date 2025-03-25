@@ -6,12 +6,16 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginBody, LoginResponse, LoginType } from '@/types/login.type'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { loginAccount } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosUnprocessableEntityError } from '@/utils/utils'
+import useAppStore from '@/store/useAppStore'
 
 export default function Login() {
+  const { setIsAuthenticated } = useAppStore()
+  const navigate = useNavigate()
+
   const form = useForm<LoginType>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
@@ -26,8 +30,9 @@ export default function Login() {
 
   const onSubmit = (values: LoginType) => {
     loginMutation.mutate(values, {
-      onSuccess(data) {
-        console.log('data', data.data.data)
+      onSuccess() {
+        setIsAuthenticated(true)
+        navigate('/')
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<LoginResponse>(error)) {

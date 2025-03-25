@@ -10,8 +10,12 @@ import { RegisterBody, RegisterResponse, RegisterType } from '@/types/register.t
 import { registerAccount } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosUnprocessableEntityError } from '@/utils/utils'
-
+import useAppStore from '@/store/useAppStore'
+import { useNavigate } from 'react-router-dom'
 export default function Register() {
+  const { setIsAuthenticated } = useAppStore()
+  const navigate = useNavigate()
+
   const form = useForm<RegisterType>({
     resolver: zodResolver(RegisterBody),
     defaultValues: {
@@ -28,7 +32,8 @@ export default function Register() {
   const onSubmit = (values: RegisterType) => {
     registerMutation.mutate(values, {
       onSuccess: (data) => {
-        console.log('data:', data.data.data)
+        data.data.data?.access_token && setIsAuthenticated(true)
+        navigate('/')
       },
       onError: (error) => {
         if (isAxiosUnprocessableEntityError<RegisterResponse>(error)) {

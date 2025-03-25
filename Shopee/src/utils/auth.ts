@@ -9,5 +9,5 @@ export const clearAccessTokenFromLS = () => {
 }
 
 export const getAccessTokenFromLS = () => {
-  localStorage.getItem(ACCESS_TOKEN) || ''
+  return localStorage.getItem(ACCESS_TOKEN) || ''
 }

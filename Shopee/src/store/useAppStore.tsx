@@ -1,22 +1,13 @@
-import { clearAccessTokenFromLS, setAccessTokenToLS } from '@/utils/auth'
 import { create } from 'zustand'
-
+import { getAccessTokenFromLS } from '@/utils/auth'
 interface AppStoreState {
-  accessToken: string
-  setAccessToken: (value: string) => void
-  clearAccessToken: () => void
+  isAuthenticated: boolean
+  setIsAuthenticated: (value: boolean) => void
 }
 
 const useAppStore = create<AppStoreState>((set) => ({
-  accessToken: '',
-  setAccessToken: (value) => {
-    set({ accessToken: value })
-    setAccessTokenToLS(value)
-  },
-  clearAccessToken: () => {
-    set({ accessToken: '' })
-    clearAccessTokenFromLS()
-  },
+  isAuthenticated: Boolean(getAccessTokenFromLS()),
+  setIsAuthenticated: (value) => set({ isAuthenticated: value }),
 }))
 
 export default useAppStore

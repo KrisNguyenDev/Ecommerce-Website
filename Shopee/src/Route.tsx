@@ -8,13 +8,13 @@ import Profile from './pages/Profile'
 import useAppStore from './store/useAppStore'
 
 function ProtectedRoute() {
-  const { accessToken } = useAppStore()
-  return accessToken ? <Outlet /> : <Navigate to="/login" />
+  const { isAuthenticated } = useAppStore()
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
 }
 
 function RejectedRoute() {
-  const { accessToken } = useAppStore()
-  return accessToken ? <Navigate to="/" /> : <Outlet />
+  const { isAuthenticated } = useAppStore()
+  return isAuthenticated ? <Navigate to="/" /> : <Outlet />
 }
 
 export default function Route() {
