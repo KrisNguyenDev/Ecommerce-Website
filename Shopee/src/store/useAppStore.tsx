@@ -1,11 +1,11 @@
 import { create } from 'zustand'
 import { getAccessTokenFromLS } from '@/utils/auth'
-interface AppStoreState {
+interface IAppStore {
   isAuthenticated: boolean
   setIsAuthenticated: (value: boolean) => void
 }
 
-const useAppStore = create<AppStoreState>((set) => ({
+const useAppStore = create<IAppStore>((set) => ({
   isAuthenticated: Boolean(getAccessTokenFromLS()),
   setIsAuthenticated: (value) => set({ isAuthenticated: value }),
 }))
