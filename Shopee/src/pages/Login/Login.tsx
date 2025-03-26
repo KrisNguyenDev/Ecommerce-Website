@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LoginBody, LoginResponse, LoginType } from '@/types/login.type'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link, useNavigate } from 'react-router-dom'
-import { loginAccount } from '@/apis/auth.api'
+import { login } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosUnprocessableEntityError } from '@/utils/utils'
 import useAppStore from '@/store/useAppStore'
@@ -25,25 +25,24 @@ export default function Login() {
   })
 
   const loginMutation = useMutation({
-    mutationFn: loginAccount,
+    mutationFn: login,
+    onSuccess() {
+      setIsAuthenticated(true)
+      navigate('/')
+    },
+    onError: (error) => {
+      if (isAxiosUnprocessableEntityError<LoginResponse>(error)) {
+        const formError = error.response?.data.data
+        formError &&
+          Object.entries(formError).forEach(([key, value]) => {
+            form.setError(key as keyof LoginType, { type: 'Server', message: value })
+          })
+      }
+    },
   })
 
   const onSubmit = (values: LoginType) => {
-    loginMutation.mutate(values, {
-      onSuccess() {
-        setIsAuthenticated(true)
-        navigate('/')
-      },
-      onError: (error) => {
-        if (isAxiosUnprocessableEntityError<LoginResponse>(error)) {
-          const formError = error.response?.data.data
-          formError &&
-            Object.entries(formError).forEach(([key, value]) => {
-              form.setError(key as keyof LoginType, { type: 'Server', message: value })
-            })
-        }
-      },
-    })
+    loginMutation.mutate(values)
   }
 
   return (

@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link } from 'react-router-dom'
 import { RegisterBody, RegisterResponse, RegisterType } from '@/types/register.type'
-import { registerAccount } from '@/apis/auth.api'
+import { register } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosUnprocessableEntityError } from '@/utils/utils'
 import useAppStore from '@/store/useAppStore'
@@ -26,25 +26,24 @@ export default function Register() {
   })
 
   const registerMutation = useMutation({
-    mutationFn: registerAccount,
+    mutationFn: register,
+    onSuccess: (data) => {
+      data.data.data?.access_token && setIsAuthenticated(true)
+      navigate('/')
+    },
+    onError: (error) => {
+      if (isAxiosUnprocessableEntityError<RegisterResponse>(error)) {
+        const formError = error.response?.data.data
+        formError &&
+          Object.entries(formError).forEach(([key, value]) => {
+            form.setError(key as keyof RegisterType, { message: value, type: 'Server' })
+          })
+      }
+    },
   })
 
   const onSubmit = (values: RegisterType) => {
-    registerMutation.mutate(values, {
-      onSuccess: (data) => {
-        data.data.data?.access_token && setIsAuthenticated(true)
-        navigate('/')
-      },
-      onError: (error) => {
-        if (isAxiosUnprocessableEntityError<RegisterResponse>(error)) {
-          const formError = error.response?.data.data
-          formError &&
-            Object.entries(formError).forEach(([key, value]) => {
-              form.setError(key as keyof RegisterType, { message: value, type: 'Server' })
-            })
-        }
-      },
-    })
+    registerMutation.mutate(values)
   }
 
   return (

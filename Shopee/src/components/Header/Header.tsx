@@ -1,15 +1,34 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { useState } from 'react'
 import { LanguageLabel, LanguageType } from '../../enum/language'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { formatCurrency, truncateText } from '@/utils/utils'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { useMutation } from '@tanstack/react-query'
+import { logout } from '@/apis/auth.api'
+import useAppStore from '@/store/useAppStore'
 
 export default function Header() {
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageType>(LanguageType.VI)
   const [searchText, setSearchText] = useState<string>('')
+  const { isAuthenticated, setIsAuthenticated } = useAppStore()
+  const navigate = useNavigate()
+
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      setIsAuthenticated(false)
+      navigate('/login')
+    },
+  })
+
+  const handleLogout = () => {
+    logoutMutation.mutate()
+  }
 
   const carts = [
     {
@@ -85,6 +104,24 @@ export default function Header() {
             </SelectGroup>
           </SelectContent>
         </Select>
+        {isAuthenticated ? (
+          <div className="flex space-x-2">
+            <Avatar className="h-7 w-7">
+              <AvatarImage src="https://github.com/shadcn.png" alt="@user" />
+              <AvatarFallback>User</AvatarFallback>
+            </Avatar>
+            <DropdownMenu>
+              <DropdownMenuTrigger>Nguyễn Minh Hiếu</DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>Tài khoản của tôi</DropdownMenuItem>
+                <DropdownMenuItem>Đơn mua</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}>Đăng xuất</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : (
+          <Link to="/login">Đăng nhập</Link>
+        )}
       </div>
       <div className="container max-w-full flex space-x-4 mt-2 items-center">
         <Link to="/">

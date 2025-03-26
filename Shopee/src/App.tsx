@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div>
-      {fetchingCount > 0 || mutatingCount > 0 ? <Loader /> : null}
+      {(fetchingCount > 0 || mutatingCount > 0) && <Loader />}
       {routeElements}
       <FloatingButton />
     </div>
