@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useMatch } from 'react-router-dom'
 import { ModeToggle } from '../ui/mode-toggle'
 
 export default function AuthHeader() {
+  const isRegisterPath = useMatch('/register')
   return (
     <div className="max-w-7xl mx-auto px-4">
       <div className="flex justify-between py-5">
@@ -13,7 +14,7 @@ export default function AuthHeader() {
               </g>
             </svg>
           </Link>
-          <div className="ml-5 text-xl lg:text-2xl">Đăng ký</div>
+          <div className="ml-5 text-xl lg:text-2xl">{isRegisterPath ? 'Đăng ký' : 'Đăng nhập'}</div>
         </div>
         <div className="flex gap-4">
           <div className="text-orange self-center">Bạn cần giúp đỡ?</div>
