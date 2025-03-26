@@ -1,11 +1,17 @@
+import { Suspense, lazy } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import ProductList from './pages/ProductList'
-import AuthLayout from './layouts/AuthLayout/AuthLayout'
-import MainLayout from './layouts/MainLayouts'
-import Profile from './pages/Profile'
 import useAppStore from './store/useAppStore'
+import Loader from './components/Loader'
+
+// Lazy load pages
+const Register = lazy(() => import('./pages/Register'))
+const Login = lazy(() => import('./pages/Login'))
+const ProductList = lazy(() => import('./pages/ProductList'))
+const Profile = lazy(() => import('./pages/Profile'))
+
+// Lazy load layouts
+const AuthLayout = lazy(() => import('./layouts/AuthLayout/AuthLayout'))
+const MainLayout = lazy(() => import('./layouts/MainLayouts'))
 
 function ProtectedRoute() {
   const { isAuthenticated } = useAppStore()
@@ -26,17 +32,21 @@ export default function Route() {
         {
           path: '/login',
           element: (
-            <AuthLayout>
-              <Login />
-            </AuthLayout>
+            <Suspense fallback={<Loader />}>
+              <AuthLayout>
+                <Login />
+              </AuthLayout>
+            </Suspense>
           ),
         },
         {
           path: '/register',
           element: (
-            <AuthLayout>
-              <Register />
-            </AuthLayout>
+            <Suspense fallback={<Loader />}>
+              <AuthLayout>
+                <Register />
+              </AuthLayout>
+            </Suspense>
           ),
         },
       ],
@@ -48,9 +58,11 @@ export default function Route() {
         {
           path: '/profile',
           element: (
-            <MainLayout>
-              <Profile />
-            </MainLayout>
+            <Suspense fallback={<Loader />}>
+              <MainLayout>
+                <Profile />
+              </MainLayout>
+            </Suspense>
           ),
         },
       ],
@@ -59,9 +71,11 @@ export default function Route() {
       path: '/',
       index: true,
       element: (
-        <MainLayout>
-          <ProductList />
-        </MainLayout>
+        <Suspense fallback={<Loader />}>
+          <MainLayout>
+            <ProductList />
+          </MainLayout>
+        </Suspense>
       ),
     },
   ])
