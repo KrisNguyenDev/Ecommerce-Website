@@ -105,23 +105,25 @@ export default function Header() {
           </SelectContent>
         </Select>
         {isAuthenticated ? (
-          <div className="flex space-x-2">
-            <Avatar className="h-7 w-7">
-              <AvatarImage
-                src="https://scontent.fhan12-1.fna.fbcdn.net/v/t1.6435-9/133841700_1470173463187726_7287216184065001525_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeF7V8aTp38y6k1hqYEIHw7EKCDTb3S78RgoINNvdLvxGLJgv5KWh7j87U8GDqwxZyEKr5FMg4IoH-v2ep9xRBiA&_nc_ohc=xhd0E2vE2EAQ7kNvgHrFV-W&_nc_oc=Adlpqq1lq6EIpSchW11rohcZlbIVREtwZg7HMcWwPSDKhhhG7HS6zb8K7EctLLBo5mw&_nc_zt=23&_nc_ht=scontent.fhan12-1.fna&_nc_gid=wLKMvZtm7TuAtA-j2Q84cA&oh=00_AYEMCpqCmL8ApQLv7IDX8beMbY3oi-GgU0ffnrmIOfJZVg&oe=680B3C4F"
-                alt="@user"
-              />
-              <AvatarFallback>User</AvatarFallback>
-            </Avatar>
-            <DropdownMenu>
-              <DropdownMenuTrigger>Nguyễn Minh Hiếu</DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem>Tài khoản của tôi</DropdownMenuItem>
-                <DropdownMenuItem>Đơn mua</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout}>Đăng xuất</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex space-x-2 items-center">
+                <Avatar className="h-7 w-7">
+                  <AvatarImage
+                    src="https://scontent.fhan12-1.fna.fbcdn.net/v/t1.6435-9/133841700_1470173463187726_7287216184065001525_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeF7V8aTp38y6k1hqYEIHw7EKCDTb3S78RgoINNvdLvxGLJgv5KWh7j87U8GDqwxZyEKr5FMg4IoH-v2ep9xRBiA&_nc_ohc=xhd0E2vE2EAQ7kNvgHrFV-W&_nc_oc=Adlpqq1lq6EIpSchW11rohcZlbIVREtwZg7HMcWwPSDKhhhG7HS6zb8K7EctLLBo5mw&_nc_zt=23&_nc_ht=scontent.fhan12-1.fna&_nc_gid=wLKMvZtm7TuAtA-j2Q84cA&oh=00_AYEMCpqCmL8ApQLv7IDX8beMbY3oi-GgU0ffnrmIOfJZVg&oe=680B3C4F"
+                    alt="@user"
+                  />
+                  <AvatarFallback>User</AvatarFallback>
+                </Avatar>
+                <div>Nguyễn Minh Hiếu</div>
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => navigate('/profile')}>Tài khoản của tôi</DropdownMenuItem>
+              <DropdownMenuItem>Đơn mua</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Đăng xuất</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <Link to="/login">Đăng nhập</Link>
         )}
