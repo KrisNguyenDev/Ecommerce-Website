@@ -13,7 +13,7 @@ class Http {
       headers: {
         'Content-Type': 'application/json',
       },
-      timeout: 10000,
+      timeout: 1000000,
     })
     this.instance.interceptors.request.use((config) => {
       if (this.accessToken) config.headers.Authorization = this.accessToken
