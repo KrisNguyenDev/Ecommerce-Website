@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react'
 import { Navigate, Outlet, useRoutes } from 'react-router-dom'
 import useAppStore from './store/useAppStore'
 import Loader from './components/Loader'
+import { PATH } from '@/constants/path'
 
 // Lazy load pages
 const Register = lazy(() => import('./pages/Register'))
@@ -30,7 +31,7 @@ export default function Route() {
       element: <RejectedRoute />,
       children: [
         {
-          path: '/login',
+          path: PATH.LOGIN,
           element: (
             <Suspense fallback={<Loader />}>
               <AuthLayout>
@@ -40,7 +41,7 @@ export default function Route() {
           ),
         },
         {
-          path: '/register',
+          path: PATH.REGISTER,
           element: (
             <Suspense fallback={<Loader />}>
               <AuthLayout>
@@ -56,7 +57,7 @@ export default function Route() {
       element: <ProtectedRoute />,
       children: [
         {
-          path: '/profile',
+          path: PATH.PROFILE,
           element: (
             <Suspense fallback={<Loader />}>
               <MainLayout>
@@ -68,7 +69,7 @@ export default function Route() {
       ],
     },
     {
-      path: '/',
+      path: PATH.HOME,
       index: true,
       element: (
         <Suspense fallback={<Loader />}>

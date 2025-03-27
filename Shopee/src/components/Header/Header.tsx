@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { useState } from 'react'
-import { LanguageLabel, LanguageType } from '../../enum/language'
+import { LanguageLabel, LanguageType } from '../../constants/language'
 import { Link, useNavigate } from 'react-router-dom'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
@@ -11,18 +11,19 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useMutation } from '@tanstack/react-query'
 import { logout } from '@/apis/auth.api'
 import useAppStore from '@/store/useAppStore'
+import { PATH } from '@/constants/path'
 
 export default function Header() {
   const [selectedLanguage, setSelectedLanguage] = useState<LanguageType>(LanguageType.VI)
   const [searchText, setSearchText] = useState<string>('')
-  const { isAuthenticated, setIsAuthenticated } = useAppStore()
+  const { isAuthenticated, user, setIsAuthenticated } = useAppStore()
   const navigate = useNavigate()
 
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       setIsAuthenticated(false)
-      navigate('/login')
+      navigate(PATH.LOGIN)
     },
   })
 
@@ -115,11 +116,11 @@ export default function Header() {
                   />
                   <AvatarFallback>User</AvatarFallback>
                 </Avatar>
-                <div>Nguyễn Minh Hiếu</div>
+                <div>{user?.email}</div>
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => navigate('/profile')}>Tài khoản của tôi</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigate(PATH.PROFILE)}>Tài khoản của tôi</DropdownMenuItem>
               <DropdownMenuItem>Đơn mua</DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout}>Đăng xuất</DropdownMenuItem>
             </DropdownMenuContent>

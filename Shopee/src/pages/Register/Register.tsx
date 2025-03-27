@@ -12,8 +12,10 @@ import { useMutation } from '@tanstack/react-query'
 import { isAxiosUnprocessableEntityError } from '@/utils/utils'
 import useAppStore from '@/store/useAppStore'
 import { useNavigate } from 'react-router-dom'
+import { PATH } from '@/constants/path'
+
 export default function Register() {
-  const { setIsAuthenticated } = useAppStore()
+  const { setIsAuthenticated, setUser } = useAppStore()
   const navigate = useNavigate()
 
   const form = useForm<RegisterType>({
@@ -29,7 +31,8 @@ export default function Register() {
     mutationFn: register,
     onSuccess: (data) => {
       data.data.data?.access_token && setIsAuthenticated(true)
-      navigate('/')
+      setUser(data.data.data?.user)
+      navigate(PATH.HOME)
     },
     onError: (error) => {
       if (isAxiosUnprocessableEntityError<RegisterResponse>(error)) {

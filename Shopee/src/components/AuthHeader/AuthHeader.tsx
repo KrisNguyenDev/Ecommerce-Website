@@ -1,8 +1,9 @@
 import { Link, useMatch } from 'react-router-dom'
 import { ModeToggle } from '../ui/mode-toggle'
+import { PATH } from '@/constants/path'
 
 export default function AuthHeader() {
-  const isRegisterPath = useMatch('/register')
+  const isRegisterPath = useMatch(PATH.REGISTER)
   return (
     <div className="max-w-7xl mx-auto px-4">
       <div className="flex justify-between py-5">

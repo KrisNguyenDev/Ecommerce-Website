@@ -11,9 +11,10 @@ import { login } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosUnprocessableEntityError } from '@/utils/utils'
 import useAppStore from '@/store/useAppStore'
+import { PATH } from '@/constants/path'
 
 export default function Login() {
-  const { setIsAuthenticated } = useAppStore()
+  const { setIsAuthenticated, setUser } = useAppStore()
   const navigate = useNavigate()
 
   const form = useForm<LoginType>({
@@ -26,9 +27,10 @@ export default function Login() {
 
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess() {
+    onSuccess(data) {
       setIsAuthenticated(true)
-      navigate('/')
+      setUser(data.data.data?.user)
+      navigate(PATH.HOME)
     },
     onError: (error) => {
       if (isAxiosUnprocessableEntityError<LoginResponse>(error)) {
