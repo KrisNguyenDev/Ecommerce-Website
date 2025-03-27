@@ -9,7 +9,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
-import { isAxiosUnprocessableEntityError } from '@/utils/utils'
+import { handleAxiosUnprocessableEntityError } from '@/utils/utils'
 import useAppStore from '@/store/useAppStore'
 import { PATH } from '@/constants/path'
 
@@ -33,13 +33,7 @@ export default function Login() {
       navigate(PATH.HOME)
     },
     onError: (error) => {
-      if (isAxiosUnprocessableEntityError<LoginResponse>(error)) {
-        const formError = error.response?.data.data
-        formError &&
-          Object.entries(formError).forEach(([key, value]) => {
-            form.setError(key as keyof LoginType, { type: 'Server', message: value })
-          })
-      }
+      handleAxiosUnprocessableEntityError<LoginResponse, LoginType>(error, form)
     },
   })
 

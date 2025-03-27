@@ -9,10 +9,10 @@ import { Link } from 'react-router-dom'
 import { RegisterBody, RegisterResponse, RegisterType } from '@/types/register.type'
 import { register } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
-import { isAxiosUnprocessableEntityError } from '@/utils/utils'
 import useAppStore from '@/store/useAppStore'
 import { useNavigate } from 'react-router-dom'
 import { PATH } from '@/constants/path'
+import { handleAxiosUnprocessableEntityError } from '@/utils/utils'
 
 export default function Register() {
   const { setIsAuthenticated, setUser } = useAppStore()
@@ -35,13 +35,7 @@ export default function Register() {
       navigate(PATH.HOME)
     },
     onError: (error) => {
-      if (isAxiosUnprocessableEntityError<RegisterResponse>(error)) {
-        const formError = error.response?.data.data
-        formError &&
-          Object.entries(formError).forEach(([key, value]) => {
-            form.setError(key as keyof RegisterType, { message: value, type: 'Server' })
-          })
-      }
+      handleAxiosUnprocessableEntityError<RegisterResponse, RegisterType>(error, form)
     },
   })
 
