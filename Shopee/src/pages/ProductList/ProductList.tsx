@@ -1,7 +1,9 @@
+import BannerCarousel from '@/components/BannerCarousel'
+
 export default function ProductList() {
   return (
-    <div>
-      <p>ProductList</p>
+    <div className="container">
+      <BannerCarousel />
     </div>
   )
 }
