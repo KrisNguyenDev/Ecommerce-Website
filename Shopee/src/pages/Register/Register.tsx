@@ -92,7 +92,12 @@ export default function Register() {
                     </FormItem>
                   )}
                 />
-                <Button className="w-full" type="submit">
+                <Button
+                  className="w-full"
+                  type="submit"
+                  disabled={registerMutation.isLoading}
+                  isLoading={registerMutation.isLoading}
+                >
                   Đăng ký
                 </Button>
               </form>

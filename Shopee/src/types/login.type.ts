@@ -1,5 +1,5 @@
 import z from 'zod'
-import { ResponseApi } from './utils.type'
+import { ResponseApi } from './responseApi.type'
 
 export const LoginBody = z
   .object({

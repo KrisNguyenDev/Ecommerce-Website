@@ -77,7 +77,12 @@ export default function Login() {
                     </FormItem>
                   )}
                 />
-                <Button className="w-full" type="submit">
+                <Button
+                  className="w-full"
+                  type="submit"
+                  disabled={loginMutation.isLoading}
+                  isLoading={loginMutation.isLoading}
+                >
                   Đăng nhập
                 </Button>
               </form>

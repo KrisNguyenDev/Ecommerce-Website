@@ -1,6 +1,6 @@
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 import { useState } from 'react'
-import { LanguageLabel, LanguageType } from '../../constants/language'
+import { LanguageLabel, LANGUAGE } from '../../constants/language'
 import { Link, useNavigate } from 'react-router-dom'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
@@ -14,7 +14,7 @@ import useAppStore from '@/store/useAppStore'
 import { PATH } from '@/constants/path'
 
 export default function Header() {
-  const [selectedLanguage, setSelectedLanguage] = useState<LanguageType>(LanguageType.VI)
+  const [selectedLanguage, setSelectedLanguage] = useState<LANGUAGE>(LANGUAGE.VI)
   const [searchText, setSearchText] = useState<string>('')
   const { isAuthenticated, user, setIsAuthenticated } = useAppStore()
   const navigate = useNavigate()
@@ -91,7 +91,7 @@ export default function Header() {
         </div>
         <Select
           value={selectedLanguage}
-          onValueChange={(value: LanguageType) => {
+          onValueChange={(value: LANGUAGE) => {
             setSelectedLanguage(value)
           }}
         >
@@ -100,8 +100,8 @@ export default function Header() {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value={LanguageType.VI}>{LanguageLabel.get(LanguageType.VI)}</SelectItem>
-              <SelectItem value={LanguageType.EN}>{LanguageLabel.get(LanguageType.EN)}</SelectItem>
+              <SelectItem value={LANGUAGE.VI}>{LanguageLabel.get(LANGUAGE.VI)}</SelectItem>
+              <SelectItem value={LANGUAGE.EN}>{LanguageLabel.get(LANGUAGE.EN)}</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>

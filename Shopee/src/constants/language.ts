@@ -1,9 +1,9 @@
-export enum LanguageType {
+export enum LANGUAGE {
   VI = 'Vi',
   EN = 'En',
 }
 
-export const LanguageLabel = new Map<LanguageType, string>([
-  [LanguageType.VI, 'Tiếng Việt'],
-  [LanguageType.EN, 'Tiếng Anh'],
+export const LanguageLabel = new Map<LANGUAGE, string>([
+  [LANGUAGE.VI, 'Tiếng Việt'],
+  [LANGUAGE.EN, 'Tiếng Anh'],
 ])
