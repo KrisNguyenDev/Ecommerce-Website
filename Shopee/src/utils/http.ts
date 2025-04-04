@@ -15,12 +15,14 @@ class Http {
       },
       timeout: 1000000,
     })
+
+    // request interceptor
     this.instance.interceptors.request.use((config) => {
       if (this.accessToken) config.headers.Authorization = this.accessToken
       return config
     })
 
-    // Add a response interceptor
+    // response interceptor
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config
