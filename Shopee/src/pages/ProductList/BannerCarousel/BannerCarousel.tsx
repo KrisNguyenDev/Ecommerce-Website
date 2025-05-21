@@ -1,5 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
 
 export default function BannerCarousel() {
   const images = [
@@ -11,7 +12,13 @@ export default function BannerCarousel() {
   ]
 
   return (
-    <Carousel>
+    <Carousel
+      plugins={[
+        Autoplay({
+          delay: 2000,
+        }),
+      ]}
+    >
       <CarouselContent>
         {images.map((item, index) => (
           <CarouselItem key={index} className="basis-1/3">
