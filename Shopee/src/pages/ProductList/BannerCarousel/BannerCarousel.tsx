@@ -1,8 +1,13 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { cn } from '@/lib/utils'
 import Autoplay from 'embla-carousel-autoplay'
 
-export default function BannerCarousel() {
+interface Props {
+  className?: string
+}
+
+export default function BannerCarousel({ className }: Props) {
   const images = [
     'https://media.istockphoto.com/id/2124102567/photo/orange-fruit-with-leaf.webp?a=1&b=1&s=612x612&w=0&k=20&c=YUa-SHN1YnyS7wYTx33M59e-FJUUmiFNcWMNO2o4ats=',
     'https://media.istockphoto.com/id/2156139816/photo/pile-of-oranges-in-market.webp?a=1&b=1&s=612x612&w=0&k=20&c=1DRJ7leF7Bl7-1cL9t540nCLLw0SWIWOQDPUNVfFCTc=',
@@ -13,6 +18,7 @@ export default function BannerCarousel() {
 
   return (
     <Carousel
+      className={cn('', className)}
       plugins={[
         Autoplay({
           delay: 2000,

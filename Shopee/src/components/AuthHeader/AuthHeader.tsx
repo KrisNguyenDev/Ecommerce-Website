@@ -5,7 +5,7 @@ import { PATH } from '@/constants/path'
 export default function AuthHeader() {
   const isRegisterPath = useMatch(PATH.REGISTER)
   return (
-    <div className="max-w-7xl mx-auto px-4">
+    <div className="container">
       <div className="flex justify-between py-5">
         <div className="flex items-end">
           <Link to="/">

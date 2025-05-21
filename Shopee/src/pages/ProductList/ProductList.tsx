@@ -6,9 +6,9 @@ import Product from './Product/Product'
 export default function ProductList() {
   return (
     <div>
-      <BannerCarousel />
+      <BannerCarousel className="container" />
       <div className="bg-gray-200 mt-3 py-6">
-        <div className="flex">
+        <div className="container flex">
           <AsideFilter className="basis-1/4" />
           <div className="basis-3/4">
             <SortProductList />
