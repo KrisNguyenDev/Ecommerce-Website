@@ -1,5 +1,10 @@
+import { Button } from '@/components/ui/button'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Separator } from '@/components/ui/separator'
 import { PATH } from '@/constants/path'
 import { cn } from '@/lib/utils'
+import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 interface Props {
@@ -7,6 +12,21 @@ interface Props {
 }
 
 export default function AsideFilter({ className }: Props) {
+  const form = useForm<{
+    start: number | string
+    end: number | string
+  }>({
+    defaultValues: {
+      start: '',
+      end: '',
+    },
+  })
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit = (value: any) => {
+    console.log(value)
+  }
+
   return (
     <div className={cn('flex flex-col space-y-6', className)}>
       <Link to={PATH.HOME} className="flex items-center font-bold">
@@ -28,7 +48,7 @@ export default function AsideFilter({ className }: Props) {
       </Link>
 
       <div>
-        <div className="flex items-center">
+        <Link to={PATH.HOME} className="flex items-center text-orange">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
             <path
               fillRule="evenodd"
@@ -37,19 +57,21 @@ export default function AsideFilter({ className }: Props) {
             />
           </svg>
           Thời trang nam
-        </div>
+        </Link>
         <div className="flex flex-col ml-6 space-y-2 mt-2">
-          <p>Áo khoác</p>
-          <p>Áo Vest & Blazer</p>
-          <p>Áo Hoodie, Áo Len & Áo Nỉ</p>
-          <p>Quần Jeans</p>
-          <p>Quần Dài/Quần Âu</p>
-          <p>Thêm ▼</p>
+          <Link to={PATH.HOME}>Áo khoác</Link>
+          <Link to={PATH.HOME}>Áo Vest & Blazer</Link>
+          <Link to={PATH.HOME}>Áo Hoodie, Áo Len & Áo Nỉ</Link>
+          <Link to={PATH.HOME}>Quần Jeans</Link>
+          <Link to={PATH.HOME}>Quần Dài/Quần Âu</Link>
+          <Link to={PATH.HOME}>Thêm ▼</Link>
         </div>
       </div>
 
+      <Separator className="bg-gray-300" />
+
       <div>
-        <div className="flex items-center">
+        <Link to={PATH.HOME} className="flex items-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -65,16 +87,53 @@ export default function AsideFilter({ className }: Props) {
             />
           </svg>
           Bộ lọc tìm kiếm
-        </div>
+        </Link>
         <div className="flex flex-col ml-6 space-y-2 mt-2">
-          <p>Áo khoác</p>
-          <p>Áo Vest & Blazer</p>
-          <p>Áo Hoodie, Áo Len & Áo Nỉ</p>
-          <p>Quần Jeans</p>
-          <p>Quần Dài/Quần Âu</p>
-          <p>Thêm ▼</p>
+          <Link to={PATH.HOME}>Áo khoác</Link>
+          <Link to={PATH.HOME}>Áo Vest & Blazer</Link>
+          <Link to={PATH.HOME}>Áo Hoodie, Áo Len & Áo Nỉ</Link>
+          <Link to={PATH.HOME}>Quần Jeans</Link>
+          <Link to={PATH.HOME}>Quần Dài/Quần Âu</Link>
+          <Link to={PATH.HOME}>Thêm ▼</Link>
         </div>
       </div>
+
+      <Separator className="bg-gray-300" />
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div>Khoảng giá</div>
+          <div className="flex space-x-2 mt-2">
+            <FormField
+              control={form.control}
+              name="start"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="number" placeholder="₫ TỪ" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="end"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input type="number" placeholder="₫ ĐẾN" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <Button className="w-full" type="submit">
+            Áp dụng
+          </Button>
+        </form>
+      </Form>
     </div>
   )
 }
