@@ -14,7 +14,7 @@ class Http {
       headers: {
         'Content-Type': 'application/json',
       },
-      timeout: 1000000,
+      timeout: 1000 * 30, // 30s
     })
 
     // request interceptor
@@ -25,6 +25,7 @@ class Http {
 
     // response interceptor
     this.instance.interceptors.response.use(
+      // on susscess
       (response) => {
         const { url } = response.config
         if (url === '/login' || url === '/register') {
@@ -40,6 +41,7 @@ class Http {
 
         return response
       },
+      // on error
       (error: AxiosError) => {
         switch (error.response?.status) {
           case HttpStatusCode.Unauthorized: {
@@ -57,7 +59,7 @@ class Http {
             break
           }
           default:
-          // Default code block
+          // default code block
         }
         return Promise.reject(error)
       },
