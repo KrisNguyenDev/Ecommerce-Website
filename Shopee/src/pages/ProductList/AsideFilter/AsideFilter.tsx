@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
+import StarRating from '@/components/ui/star-rating'
 import { PATH } from '@/constants/path'
 import { cn } from '@/lib/utils'
 import { useForm } from 'react-hook-form'
@@ -102,7 +103,7 @@ export default function AsideFilter({ className }: Props) {
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div>Khoảng giá</div>
+          Khoảng giá
           <div className="flex space-x-2 mt-2">
             <FormField
               control={form.control}
@@ -134,6 +135,23 @@ export default function AsideFilter({ className }: Props) {
           </Button>
         </form>
       </Form>
+
+      <Separator className="bg-gray-300" />
+      <div>
+        Đánh giá
+        {Array(5)
+          .fill(0)
+          .map((_, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                console.log(5 - index)
+              }}
+            >
+              <StarRating initialRating={5 - index} />
+            </div>
+          ))}
+      </div>
     </div>
   )
 }
