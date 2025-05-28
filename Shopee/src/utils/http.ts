@@ -2,6 +2,7 @@ import { AuthResponse } from '@/types/auth.type'
 import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
 import { toast } from 'react-toastify'
 import { clearAccessTokenFromLS, getAccessTokenFromLS, setAccessTokenToLS, setUserToLS } from './auth'
+import { PATH } from '@/constants/path'
 
 class Http {
   instance: AxiosInstance
@@ -39,12 +40,24 @@ class Http {
 
         return response
       },
-      function (error: AxiosError) {
-        if (error.response?.status !== HttpStatusCode.UnprocessableEntity) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const data: any | undefined = error.response?.data
-          const errorMessage = data?.message || error.message
-          toast.error(errorMessage)
+      (error: AxiosError) => {
+        switch (error.response?.status) {
+          case HttpStatusCode.Unauthorized: {
+            this.accessToken = ''
+            clearAccessTokenFromLS()
+            window.location.replace(PATH.LOGIN)
+            toast.error('Phiên đăng nhập đã hết, làm ơn đăng nhập lại.')
+            break
+          }
+          case HttpStatusCode.InternalServerError: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const data: any | undefined = error.response?.data
+            const errorMessage = data?.message || error.message
+            toast.error(errorMessage)
+            break
+          }
+          default:
+          // Default code block
         }
         return Promise.reject(error)
       },
