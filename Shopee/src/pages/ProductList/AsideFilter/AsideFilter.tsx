@@ -5,35 +5,49 @@ import { Separator } from '@/components/ui/separator'
 import StarRating from '@/components/ui/star-rating'
 import { PATH } from '@/constants/path'
 import { cn } from '@/lib/utils'
+import { ProductQueryParams } from '@/types/productList.type'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 interface Props {
   className?: string
+  onChangeFilter: (value: ProductQueryParams) => void
 }
 
-export default function AsideFilter({ className }: Props) {
-  const [rating, setRating] = useState<number>(0)
+interface FormType {
+  price_min?: number
+  price_max?: number
+}
 
-  const form = useForm<{
-    start: number | string
-    end: number | string
-  }>({
+export default function AsideFilter({ className, onChangeFilter }: Props) {
+  const [rating, setRating] = useState<number>(0)
+  const form = useForm<FormType>({
     defaultValues: {
-      start: '',
-      end: '',
+      price_min: 0,
+      price_max: 0,
     },
   })
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit = (value: any) => {
-    console.log(value)
-  }
 
   const handleClearFilter = () => {
     form.reset()
     setRating(0)
+    onChangeFilter({
+      price_min: undefined,
+      price_max: undefined,
+      rating_filter: undefined,
+    })
+  }
+
+  const onPriceChange = (values: FormType) => {
+    onChangeFilter({
+      price_min: values.price_min,
+      price_max: values.price_max,
+    })
+  }
+
+  const onRatingChange = (value: number) => {
+    onChangeFilter({ rating_filter: value })
   }
 
   return (
@@ -110,16 +124,16 @@ export default function AsideFilter({ className }: Props) {
       <Separator className="bg-gray-300" />
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onPriceChange)}>
           Khoảng giá
           <div className="flex space-x-2 mt-2">
             <FormField
               control={form.control}
-              name="start"
+              name="price_min"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input type="number" placeholder="₫ TỪ" {...field} />
+                    <Input type="number" placeholder="₫ TỪ" {...field} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -127,11 +141,11 @@ export default function AsideFilter({ className }: Props) {
             />
             <FormField
               control={form.control}
-              name="end"
+              name="price_max"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input type="number" placeholder="₫ ĐẾN" {...field} />
+                    <Input type="number" placeholder="₫ ĐẾN" {...field} value={field.value || ''} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -149,7 +163,7 @@ export default function AsideFilter({ className }: Props) {
       <div>
         Đánh giá
         <div className="flex items-end space-x-2">
-          <StarRating initialRating={rating} onRatingChange={(value) => setRating(value)} />
+          <StarRating initialRating={rating} onRatingChange={onRatingChange} />
           {rating !== 5 && rating !== 0 && <p>Trở lên</p>}
         </div>
       </div>
