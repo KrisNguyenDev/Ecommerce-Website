@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import StarRating from '@/components/ui/star-rating'
 import { PATH } from '@/constants/path'
 import { cn } from '@/lib/utils'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
@@ -13,6 +14,8 @@ interface Props {
 }
 
 export default function AsideFilter({ className }: Props) {
+  const [rating, setRating] = useState<number>(0)
+
   const form = useForm<{
     start: number | string
     end: number | string
@@ -26,6 +29,11 @@ export default function AsideFilter({ className }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (value: any) => {
     console.log(value)
+  }
+
+  const handleClearFilter = () => {
+    form.reset()
+    setRating(0)
   }
 
   return (
@@ -137,21 +145,18 @@ export default function AsideFilter({ className }: Props) {
       </Form>
 
       <Separator className="bg-gray-300" />
+
       <div>
         Đánh giá
-        {Array(5)
-          .fill(0)
-          .map((_, index) => (
-            <div
-              key={index}
-              onClick={() => {
-                console.log(5 - index)
-              }}
-            >
-              <StarRating initialRating={5 - index} />
-            </div>
-          ))}
+        <div className="flex items-end space-x-2">
+          <StarRating initialRating={rating} onRatingChange={(value) => setRating(value)} />
+          {rating !== 5 && rating !== 0 && <p>Trở lên</p>}
+        </div>
       </div>
+
+      <Separator className="bg-gray-300" />
+
+      <Button onClick={handleClearFilter}>Xóa tất cả</Button>
     </div>
   )
 }
