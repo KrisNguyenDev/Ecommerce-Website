@@ -10,6 +10,15 @@ import {
 import { cn } from '@/lib/utils'
 import { Order, ProductQueryParams, SortBy } from '@/types/productList.type'
 import { useState } from 'react'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination'
 
 interface Props {
   className?: string
@@ -36,8 +45,8 @@ export default function SortProductList({ className, onChangeFilter }: Props) {
   }
 
   return (
-    <div className={cn('flex bg-gray-300 px-6 py-3 text-black', className)}>
-      <div className="flex space-x-4 items-center">
+    <div className={cn('flex justify-between bg-gray-300 px-6 py-3 text-black w-full', className)}>
+      <div className="flex basis-3/4 space-x-4 items-center flex-1">
         <div>Sắp xếp theo</div>
         <div className={getClassName(SortBy.createdAt)} onClick={() => onChangeSortBy(SortBy.createdAt)}>
           Mới nhất
@@ -66,6 +75,22 @@ export default function SortProductList({ className, onChangeFilter }: Props) {
           </SelectContent>
         </Select>
       </div>
+      <Pagination className="basis-1/4 justify-end">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   )
 }
