@@ -5,14 +5,14 @@ import { Separator } from '@/components/ui/separator'
 import StarRating from '@/components/ui/star-rating'
 import { PATH } from '@/constants/path'
 import { cn } from '@/lib/utils'
-import { ProductQueryParams } from '@/types/productList.type'
-import { useState } from 'react'
+import { ProductParams } from '@/types/productList.type'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
 interface Props {
   className?: string
-  onChangeFilter: (value: ProductQueryParams) => void
+  productParams: ProductParams
+  onChangeFilter: (value: ProductParams) => void
 }
 
 interface FormType {
@@ -20,22 +20,20 @@ interface FormType {
   price_max?: number
 }
 
-export default function AsideFilter({ className, onChangeFilter }: Props) {
-  const [rating, setRating] = useState<number>(0)
+export default function AsideFilter({ className, productParams, onChangeFilter }: Props) {
   const form = useForm<FormType>({
     defaultValues: {
-      price_min: 0,
-      price_max: 0,
+      price_min: productParams?.price_min,
+      price_max: productParams?.price_max,
     },
   })
 
   const handleClearFilter = () => {
     form.reset()
-    setRating(0)
     onChangeFilter({
-      price_min: undefined,
-      price_max: undefined,
-      rating_filter: undefined,
+      price_min: 0,
+      price_max: 0,
+      rating_filter: 0,
     })
   }
 
@@ -163,8 +161,8 @@ export default function AsideFilter({ className, onChangeFilter }: Props) {
       <div>
         Đánh giá
         <div className="flex items-end space-x-2">
-          <StarRating initialRating={rating} onRatingChange={onRatingChange} />
-          {rating !== 5 && rating !== 0 && <p>Trở lên</p>}
+          <StarRating initialRating={productParams.rating_filter} onRatingChange={onRatingChange} />
+          {productParams.rating_filter !== 5 && productParams.rating_filter !== 0 && <p>Trở lên</p>}
         </div>
       </div>
 

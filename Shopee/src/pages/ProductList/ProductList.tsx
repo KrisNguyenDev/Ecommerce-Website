@@ -3,25 +3,30 @@ import AsideFilter from './AsideFilter'
 import SortProductList from './SortProductList'
 import Product from './Product/Product'
 import { useState } from 'react'
-import { ProductQueryParams } from '@/types/productList.type'
+import { ProductParams, SortBy } from '@/types/productList.type'
 
 export default function ProductList() {
-  const [productQueryParams, setProductQueryParams] = useState<ProductQueryParams>()
+  const [ProductParams, setProductParams] = useState<ProductParams>({
+    rating_filter: 0,
+    price_min: 0,
+    price_max: 0,
+    sort_by: SortBy.createdAt,
+  })
 
-  const onChangeFilter = (values: ProductQueryParams) => {
-    setProductQueryParams((prev) => ({ ...prev, ...values }))
+  const onChangeFilter = (values: ProductParams) => {
+    setProductParams((prev) => ({ ...prev, ...values }))
   }
 
-  console.log('productQueryParams', productQueryParams)
+  console.log('ProductParams', ProductParams)
 
   return (
     <div>
       <BannerCarousel className="container" />
       <div className="bg-gray-200 mt-3 py-6">
         <div className="container flex">
-          <AsideFilter onChangeFilter={onChangeFilter} className="basis-1/4" />
+          <AsideFilter productParams={ProductParams} onChangeFilter={onChangeFilter} className="basis-1/4" />
           <div className="basis-3/4">
-            <SortProductList onChangeFilter={onChangeFilter} />
+            <SortProductList productParams={ProductParams} onChangeFilter={onChangeFilter} />
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {Array(30)
                 .fill(0)

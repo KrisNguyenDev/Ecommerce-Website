@@ -8,8 +8,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
-import { Order, ProductQueryParams, SortBy } from '@/types/productList.type'
-import { useState } from 'react'
+import { Order, ProductParams, SortBy } from '@/types/productList.type'
 import {
   Pagination,
   PaginationContent,
@@ -22,21 +21,19 @@ import {
 
 interface Props {
   className?: string
-  onChangeFilter: (value: ProductQueryParams) => void
+  productParams: ProductParams
+  onChangeFilter: (value: ProductParams) => void
 }
 
-export default function SortProductList({ className, onChangeFilter }: Props) {
-  const [sortBy, setSortBy] = useState<SortBy>(SortBy.createdAt)
-
+export default function SortProductList({ className, productParams, onChangeFilter }: Props) {
   const getClassName = (type: SortBy) => {
     return cn(
       'px-4 py-2 hover:bg-orange hover:opacity-20 cursor-pointer',
-      sortBy == type ? 'bg-orange text-white' : 'bg-white',
+      productParams?.sort_by == type ? 'bg-orange text-white' : 'bg-white',
     )
   }
 
   const onChangeSortBy = (value: SortBy) => {
-    setSortBy(value)
     onChangeFilter({ sort_by: value })
   }
 

@@ -1,4 +1,7 @@
-export interface ProductQueryParams {
+import { Pagenation } from './pagenation.type'
+import { ResponseApi } from './responseApi.type'
+
+export interface ProductParams {
   page?: number // Số trang, mặc định là 1
   limit?: number // Số sản phẩm trên 1 trang, mặc định là 30
   order?: Order // Sắp xếp theo thứ tự, mặc định là 'desc'
@@ -22,3 +25,9 @@ export enum Order {
   asc = 'asc',
   desc = 'desc',
 }
+
+export type ProductsResponse = ResponseApi<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  products: any[]
+  pagenation: Pagenation
+}>
