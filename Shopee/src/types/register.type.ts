@@ -1,7 +1,13 @@
 import z from 'zod'
 import { ResponseApi } from './responseApi.type'
 
-export const RegisterBody = z
+export type RegisterType = {
+  email: string
+  password: string
+  confirmPassword: string
+}
+
+export const RegisterRules: z.ZodType<RegisterType> = z
   .object({
     email: z
       .string({
@@ -36,7 +42,5 @@ export const RegisterBody = z
       })
     }
   })
-
-export type RegisterType = z.TypeOf<typeof RegisterBody>
 
 export type RegisterResponse = ResponseApi<Omit<RegisterType, 'confirmPassword'>>

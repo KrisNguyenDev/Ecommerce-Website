@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoginBody, LoginResponse, LoginType } from '@/types/login.type'
+import { LoginRules, LoginResponse, LoginType } from '@/types/login.type'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link, useNavigate } from 'react-router-dom'
 import { login } from '@/apis/auth.api'
@@ -18,7 +18,7 @@ export default function Login() {
   const navigate = useNavigate()
 
   const form = useForm<LoginType>({
-    resolver: zodResolver(LoginBody),
+    resolver: zodResolver(LoginRules),
     defaultValues: {
       email: '',
       password: '',

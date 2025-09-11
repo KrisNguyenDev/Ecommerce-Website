@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Link } from 'react-router-dom'
-import { RegisterBody, RegisterResponse, RegisterType } from '@/types/register.type'
+import { RegisterRules, RegisterResponse, RegisterType } from '@/types/register.type'
 import { register } from '@/apis/auth.api'
 import { useMutation } from '@tanstack/react-query'
 import useAppStore from '@/store/useAppStore'
@@ -19,7 +19,7 @@ export default function Register() {
   const navigate = useNavigate()
 
   const form = useForm<RegisterType>({
-    resolver: zodResolver(RegisterBody),
+    resolver: zodResolver(RegisterRules),
     defaultValues: {
       email: '',
       password: '',

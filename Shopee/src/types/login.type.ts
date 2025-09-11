@@ -1,7 +1,14 @@
 import z from 'zod'
 import { ResponseApi } from './responseApi.type'
 
-export const LoginBody = z
+export type LoginType = {
+  email: string
+  password: string
+}
+
+export type LoginResponse = ResponseApi<LoginType>
+
+export const LoginRules: z.ZodType<LoginType> = z
   .object({
     email: z
       .string({
@@ -18,7 +25,3 @@ export const LoginBody = z
       .max(100, 'Mật khẩu không được vượt quá 100 ký tự'),
   })
   .strict('Dữ liệu không hợp lệ')
-
-export type LoginType = z.TypeOf<typeof LoginBody>
-
-export type LoginResponse = ResponseApi<LoginType>
