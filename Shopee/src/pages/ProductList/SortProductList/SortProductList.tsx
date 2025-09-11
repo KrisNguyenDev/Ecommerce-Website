@@ -28,7 +28,7 @@ interface Props {
 export default function SortProductList({ className, productParams, onChangeFilter }: Props) {
   const getClassName = (type: SortBy) => {
     return cn(
-      'px-4 py-2 hover:bg-orange hover:opacity-20 cursor-pointer',
+      'px-4 py-2 hover:bg-orange hover:opacity-20 cursor-pointer text-sm sm:text-base',
       productParams?.sort_by == type ? 'bg-orange text-white' : 'bg-white',
     )
   }
@@ -42,9 +42,14 @@ export default function SortProductList({ className, productParams, onChangeFilt
   }
 
   return (
-    <div className={cn('flex justify-between bg-gray-300 px-6 py-3 text-black w-full', className)}>
-      <div className="flex basis-3/4 space-x-4 items-center flex-1">
-        <div>Sắp xếp theo</div>
+    <div
+      className={cn(
+        'flex flex-col sm:flex-row sm:justify-between bg-gray-300 px-4 sm:px-6 py-3 text-black w-full gap-2',
+        className,
+      )}
+    >
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4 flex-1">
+        <div className="text-sm sm:text-base">Sắp xếp theo</div>
         <div className={getClassName(SortBy.createdAt)} onClick={() => onChangeSortBy(SortBy.createdAt)}>
           Mới nhất
         </div>
@@ -60,7 +65,7 @@ export default function SortProductList({ className, productParams, onChangeFilt
             onChangeOrderBy(value)
           }}
         >
-          <SelectTrigger className="w-[200px] rounded-none">
+          <SelectTrigger className="w-full sm:w-[200px] rounded-none">
             <SelectValue placeholder="Giá" />
           </SelectTrigger>
           <SelectContent>
@@ -72,8 +77,8 @@ export default function SortProductList({ className, productParams, onChangeFilt
           </SelectContent>
         </Select>
       </div>
-      <Pagination className="basis-1/4 justify-end">
-        <PaginationContent>
+      <Pagination className="justify-center sm:justify-end sm:basis-1/4">
+        <PaginationContent className="flex-wrap">
           <PaginationItem>
             <PaginationPrevious href="#" />
           </PaginationItem>
