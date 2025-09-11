@@ -16,13 +16,14 @@ import { PATH } from '@/constants/path'
 export default function Header() {
   const [selectedLanguage, setSelectedLanguage] = useState<LANGUAGE>(LANGUAGE.VI)
   const [searchText, setSearchText] = useState<string>('')
-  const { isAuthenticated, user, setIsAuthenticated } = useAppStore()
+  const { isAuthenticated, user, setIsAuthenticated, setUser } = useAppStore()
   const navigate = useNavigate()
 
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       setIsAuthenticated(false)
+      setUser(undefined)
       navigate(PATH.LOGIN)
     },
   })
