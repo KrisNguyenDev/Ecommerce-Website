@@ -12,6 +12,7 @@ import { useMutation } from '@tanstack/react-query'
 import { logout } from '@/apis/auth.api'
 import useAppStore from '@/store/useAppStore'
 import { PATH } from '@/constants/path'
+import { ModeToggle } from '../ui/modeToggle'
 
 export default function Header() {
   const [selectedLanguage, setSelectedLanguage] = useState<LANGUAGE>(LANGUAGE.VI)
@@ -130,6 +131,7 @@ export default function Header() {
           ) : (
             <Link to="/login">Đăng nhập</Link>
           )}
+          <ModeToggle />
         </div>
         <div className="flex space-x-4 mt-2 items-center">
           <Link to="/">

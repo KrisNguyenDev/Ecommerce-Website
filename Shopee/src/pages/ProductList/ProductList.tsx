@@ -21,7 +21,7 @@ export default function ProductList() {
 
   return (
     <div>
-      <BannerCarousel className="container" />
+      <BannerCarousel className="w-2/3 md:w-5/6 mx-auto" />
       <div className="bg-gray-200 mt-3 py-6">
         <div className="container flex">
           <AsideFilter productParams={ProductParams} onChangeFilter={onChangeFilter} className="basis-1/4" />
