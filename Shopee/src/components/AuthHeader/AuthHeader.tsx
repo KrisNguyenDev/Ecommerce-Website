@@ -1,5 +1,5 @@
 import { Link, useMatch } from 'react-router-dom'
-import { ModeToggle } from '../ui/mode-toggle'
+import { ModeToggle } from '../ui/modeToggle'
 import { PATH } from '@/constants/path'
 
 export default function AuthHeader() {
