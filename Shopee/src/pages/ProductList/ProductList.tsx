@@ -27,7 +27,7 @@ export default function ProductList() {
           <AsideFilter productParams={ProductParams} onChangeFilter={onChangeFilter} className="basis-1/4" />
           <div className="basis-3/4">
             <SortProductList productParams={ProductParams} onChangeFilter={onChangeFilter} />
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
               {Array(30)
                 .fill(0)
                 .map((_, index) => (

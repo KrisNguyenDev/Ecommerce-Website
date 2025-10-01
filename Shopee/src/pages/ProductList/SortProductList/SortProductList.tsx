@@ -28,7 +28,7 @@ interface Props {
 export default function SortProductList({ className, productParams, onChangeFilter }: Props) {
   const getClassName = (type: SortBy) => {
     return cn(
-      'px-4 py-2 hover:bg-orange hover:opacity-20 cursor-pointer text-sm sm:text-base',
+      'px-4 py-2 hover:bg-orange cursor-pointer text-sm sm:text-base',
       productParams?.sort_by == type ? 'bg-orange text-white' : 'bg-white',
     )
   }
